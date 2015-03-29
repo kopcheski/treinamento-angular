@@ -1,0 +1,43 @@
+<!doctype html>
+<meta charset="UTF-8"/>
+<html ng-app="pedidosApp">
+    <head>
+        <title>Hello world</title>
+        <script src="angular.js"></script>
+        <script>
+            var app = angular.module("pedidosApp", []);
+            app.controller("pedidosCtrl", function($scope) {
+                    $scope.itens = [
+                        {nome: 'coca', preco: 5},
+                        {nome: 'agua', preco: 2},
+                        {nome: 'cerveja', preco: 8}];
+
+                    $scope.pedidos = [];
+
+                    $scope.add = function(pedido) {
+                            $scope.pedidos.push(angular.copy(pedido));
+                            delete $scope.pedido;
+                        };
+                });
+        </script>
+    </head>
+    <body>
+        <div ng-controller="pedidosCtrl">
+            <h3>Cardarpio</h3>
+            <div ng-repeat="item in itens">
+                Nome: {{item.nome}} - Preco: {{item.preco}}
+            </div>
+            </br>
+            </br>
+            <h3>Fazer Pedido:</h3>
+            Quantidade: <input type="text" ng-model="pedido.quantidade"/>
+            Item: <select ng-model="pedido.nome" ng-options="item.nome for item in itens"></select>
+
+            <button ng-click="add(pedido)">Add</button>
+            </br>Pedido feito:
+            <div ng-repeat="pedido in pedidos">
+                {{pedido.quantidade}} - {{pedido.nome}}
+            </div>
+        </div>
+    </body>
+</html>
