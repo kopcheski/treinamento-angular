@@ -1,0 +1,52 @@
+       <div ng-controller="pedidosCtrl">
+            <h3>Cardápio</h3>
+            <table class="table table-striped">
+                <tr>
+                    <th>Nome</th>
+                    <th>Preço</th>
+                </tr>
+                <tr ng-repeat="item in cardapio">
+                  <td>{{item.descricao}}</td>
+                  <td>{{item.preco}}</td>
+                </tr>
+            </table>
+            </br>
+            </br>
+			<h3>Fazer Pedido:</h3>
+			</br>
+			<form name="pedidosForm">
+				<!--Telefone: <input type="text" name="telefone" ng-model="pedido.telefone" ng-model-option="{updateOn: 'blur'}" ng-pattern="/\d{4}-\d{4}/" ng-required="true"/>-->
+				Quantidade: <input type="text" name="quantidade" ng-model="pedido.quantidade" ng-model-option="{updateOn: 'blur'}" ng-required="true"/>
+				Item: <select name="item" ng-model="pedido.item" ng-model-option="{updateOn: 'blur'}" ng-options="item.descricao for item in cardapio" ng-required="true"></select>
+				<button ng-click="add(pedido)" ng-disabled="pedidosForm.$invalid">Adicionar</button>
+			</form>
+			</br>
+			<div ng-show="pedidos.length">
+				<h3>Pedidos feitos:</h3>
+				<table class="table table-bordered">
+					<tr>
+						<th>Quantidade</th>
+						<th>Item</th>
+						<th>Preço</th>
+						<th>Total</th>
+						<th></th>
+					</tr>
+					<tr ng-repeat="pedido in pedidos">
+					    <td>{{pedido.quantidade}}</td>
+					    <td>{{pedido.item.descricao}}</td>
+					    <td>{{pedido.item.preco}}</td>
+					    <td>{{pedido.item.subtotal}}</td>
+					    <td><button ng-click="remove(pedido)"/>Remover</button></td>
+					</tr>
+					<tr>
+					    <td colspan="2"></td>
+					    <td><b>Total:</b></td>
+					    <td>{{totalPedidos}}</td>
+					    <td></td>
+					</tr>
+				</table>
+			</div>
+			<div class="alert alert-danger" ng-show="pedidosForm.$invalid && pedidosForm.$dirty">
+				Campos obrigatórios nao preenchidos
+			</div>
+        </div>
